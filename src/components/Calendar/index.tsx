@@ -10,6 +10,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import Card from '../Card';
+import User from '../User';
 
 export default function Calendar() {
 
@@ -33,7 +34,7 @@ export default function Calendar() {
       title: 'John Doe',
       start: '08:00',
       end: '12:00',
-      status: 'notStarted'
+      status: 'not Started'
     }
   ]
 
@@ -72,7 +73,7 @@ export default function Calendar() {
     return (
       <View
         flex={1}
-        bgColor={'#242424'}
+        bgColor={'#292643'}
       >
         <View
           flex={1}
@@ -80,7 +81,7 @@ export default function Calendar() {
         >
           <ReactNativeCalendars
             theme={{
-              backgroundColor: '#111',
+              backgroundColor: '#292643',
               calendarBackground: 'transparent',
             }}
             dayComponent={
@@ -111,7 +112,7 @@ export default function Calendar() {
             p={3}
             flex={1}
             h={'full'}
-            bgColor="#d9d9d9"
+            bgColor="white"
             style={{
               borderTopLeftRadius: 37,
               borderTopRightRadius: 37

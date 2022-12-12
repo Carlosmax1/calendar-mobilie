@@ -13,7 +13,7 @@ export default function User() {
         height: 100
       }}
       w={'16'}
-      bgColor={'#16161678'}
+      bgColor={'#39355c6a'}
       roundedBottomLeft={'full'}
       roundedBottomRight={'full'}
     >

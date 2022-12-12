@@ -65,7 +65,7 @@ export default function SignIn() {
             />
             <Button
               fontFamily="Poppins_400Regular"
-              bg={"#111"}
+              bg={"#292643"}
               title="Login"
               borderTopLeftRadius={20}
               borderBottomLeftRadius={20}
