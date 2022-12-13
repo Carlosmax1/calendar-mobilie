@@ -2,7 +2,7 @@ import { VStack } from "native-base";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 type CircleProps = {
-  status?: 'done' | 'progress' | 'notStarted';
+  status?: 'done' | 'progress' | 'not Started';
 }
 
 export default function Circle({ status }: CircleProps) {

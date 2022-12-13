@@ -24,7 +24,6 @@ export default function Card(
   { id, title, start, end, status }: CardProps
 ) {
 
-
   const [fontsLoaded] = useFonts({
     Poppins_200ExtraLight,
     Poppins_300Light,
@@ -85,10 +84,14 @@ export default function Card(
               fontFamily={"Poppins_500Medium"}
               mr={"10"}
               fontSize={"md"}
-              bg="#292643"
-              width={"auto"}
+              bg={
+                status === 'done' && "amber.200" ||
+                status === 'progress' && "red.200" ||
+                status === 'not Started' && 'blue.200'
+              }
+              width={120}
               height={10}
-              rounded={"lg"}
+              rounded={"full"}
               textAlign="center"
               p={2}
               color="white"

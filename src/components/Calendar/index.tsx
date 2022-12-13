@@ -1,6 +1,6 @@
-import { View, Text, ScrollView, VStack, Radio } from 'native-base';
+import { View, Text, ScrollView, VStack } from 'native-base';
 import { Calendar as ReactNativeCalendars, LocaleConfig } from 'react-native-calendars';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator, Animated } from 'react-native';
 import { useFonts } from 'expo-font';
 import {
   Poppins_400Regular,
@@ -8,35 +8,44 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins';
+import { HandlerStateChangeEvent, PanGestureHandler, PanGestureHandlerEventPayload } from 'react-native-gesture-handler';
 
 import Card from '../Card';
 import User from '../User';
 
 export default function Calendar() {
 
-  const cardsContent = [
+  let cardsContent = [
     {
       id: 1,
       title: 'John Doe',
-      start: '08:00',
-      end: '12:00',
-      status: 'done'
+      start: '13:00',
+      end: '14:00',
+      status: 'not Started'
     },
     {
       id: 2,
       title: 'John Doe',
-      start: '08:00',
-      end: '12:00',
+      start: '12:00',
+      end: '13:00',
       status: 'progress'
     },
     {
       id: 3,
       title: 'John Doe',
-      start: '08:00',
-      end: '12:00',
-      status: 'not Started'
+      start: '09:00',
+      end: '13:00',
+      status: 'done'
     }
   ]
+
+  cardsContent.sort((a, b): any => {
+    if (a.start < b.start) {
+      return -1;
+    } else {
+      return true;
+    }
+  })
 
   LocaleConfig.locales['br'] = {
     monthNames: [
@@ -66,6 +75,23 @@ export default function Calendar() {
     Poppins_600SemiBold,
     Poppins_700Bold
   });
+
+  const translateY = new Animated.Value(0);
+
+  const animatedEvent = Animated.event(
+    [
+      {
+        nativeEvent: {
+          translationY: translateY,
+        }
+      }
+    ],
+    { useNativeDriver: true }
+  )
+
+  function onHandlerStateChanged(event: HandlerStateChangeEvent<PanGestureHandlerEventPayload>) {
+
+  }
 
   if (!fontsLoaded) {
     return <ActivityIndicator />
@@ -108,38 +134,46 @@ export default function Calendar() {
               </View>
             }
           />
-          <ScrollView
-            p={3}
-            flex={1}
-            h={'full'}
-            bgColor="white"
-            style={{
-              borderTopLeftRadius: 37,
-              borderTopRightRadius: 37
-            }}
+          <PanGestureHandler
+            onGestureEvent={animatedEvent}
+            onHandlerStateChange={onHandlerStateChanged}
           >
-            <Text
-              color={'#242424'}
-              fontFamily="Poppins_600SemiBold"
-              fontSize={'3xl'}
-              ml={2}
-              mt={2}
+            <ScrollView
+              p={3}
+              flex={1}
+              h={'full'}
+              bgColor="white"
+              style={{
+                borderTopLeftRadius: 37,
+                borderTopRightRadius: 37,
+                position: 'absolute',
+                top: 250,
+              }}
             >
-              Hoje
-            </Text>
-            <VStack>
-              {cardsContent.map(item => (
-                <Card 
-                  key={item.id}
-                  title={item.title}
-                  end={item.end}
-                  start={item.start}
-                  id={item.id}
-                  status={item.status}
-                />
-              ))}
-            </VStack>
-          </ScrollView>
+              <Text
+                color={'#292643'}
+                fontFamily="Poppins_600SemiBold"
+                fontSize={'3xl'}
+                ml={2}
+                mt={2}
+                mb={5}
+              >
+                Hoje
+              </Text>
+              <VStack>
+                {cardsContent.map(item => (
+                  <Card
+                    key={item.id}
+                    title={item.title}
+                    end={item.end}
+                    start={item.start}
+                    id={item.id}
+                    status={item.status}
+                  />
+                ))}
+              </VStack>
+            </ScrollView>
+          </PanGestureHandler>
         </View>
       </View>
     )
